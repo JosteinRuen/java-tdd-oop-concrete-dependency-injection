@@ -20,10 +20,12 @@ class ComputerTest {
         PowerSupply myPsu = new PowerSupply();
         Computer myPc = new Computer(myPsu);
 
-        myPc.installGame("Final Fantasy XI");
+        Game myNewGame = new Game("Final Fantasy XI");
 
-        Assertions.assertEquals(1, myPc.installedGames.size());
-        Assertions.assertEquals("Final Fantasy XI", myPc.installedGames.get(0).name);
+        myPc.installGame(myNewGame);
+
+        Assertions.assertEquals(1, myPc.getInstalledGames().size());
+        Assertions.assertEquals("Final Fantasy XI", myPc.getInstalledGames().get(0).name);
     }
 
     @Test
@@ -31,13 +33,17 @@ class ComputerTest {
         PowerSupply myPsu = new PowerSupply();
         Computer myPc = new Computer(myPsu);
 
-        myPc.installGame("Duck Game");
-        myPc.installGame("Dragon's Dogma: Dark Arisen");
+        Game myNewGame = new Game("Duck Game");
+        myPc.installGame(myNewGame);
+        Game myNewGame2 = new Game ("Dragon's Dogma: Dark Arisen");
+        myPc.installGame(myNewGame);
+        myPc.installGame(myNewGame2);
 
         Assertions.assertEquals("Playing Duck Game", myPc.playGame("Duck Game"));
         Assertions.assertEquals("Playing Dragon's Dogma: Dark Arisen", myPc.playGame("Dragon's Dogma: Dark Arisen"));
         Assertions.assertEquals("Game not installed", myPc.playGame("Morrowind"));
     }
+
 
     @Test
     public void canPreinstallGames() {
@@ -49,8 +55,10 @@ class ComputerTest {
 
         Computer myPc = new Computer(myPsu, preInstalled);
 
-        Assertions.assertEquals(2, myPc.installedGames.size());
-        Assertions.assertEquals("Dwarf Fortress", myPc.installedGames.get(0).name);
-        Assertions.assertEquals("Baldur's Gate", myPc.installedGames.get(1).name);
+        Assertions.assertEquals(2, myPc.getInstalledGames().size());
+        Assertions.assertEquals("Dwarf Fortress", myPc.getInstalledGames().get(0).name);
+        Assertions.assertEquals("Baldur's Gate", myPc.getInstalledGames().get(1).name);
     }
+
+
 }
